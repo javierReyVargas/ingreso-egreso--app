@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-register',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor() { }
+  constructor(private serviceAuth: AuthService) { }
 
   ngOnInit() {
+  }
+
+  public onSubmit(data: any) {
+    console.log(data);
+    this.serviceAuth.register(data.name, data.email, data.password);
   }
 
 }
