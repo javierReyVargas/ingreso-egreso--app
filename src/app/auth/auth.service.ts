@@ -31,8 +31,7 @@ export class AuthService {
         if (userFb) {
           this.userSubscription = this.afDB.doc(`${ userFb.uid }/usuario`).valueChanges()
             .subscribe(
-              (usuarioObj) => {
-                console.log(usuarioObj);
+              (usuarioObj: any) => {
                 const newUser = new User(usuarioObj);
                 this.store.dispatch(new SetUserAction(newUser));
               }
