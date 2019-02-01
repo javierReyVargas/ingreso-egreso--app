@@ -2,17 +2,23 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 /*
+* ngrx
+* */
+import {StoreModule} from '@ngrx/store';
+import {appReducers} from './app.reducer';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+
+
+
+
+/*
 * modules
 * */
 import {AppRoutingModule} from './app.routing.module';
 import {FormsModule} from '@angular/forms';
 import {AngularFireModule} from '@angular/fire';
-import {AngularFirestoreModule} from '@angular/fire/firestore';
+import {AngularFirestoreModule, FirestoreSettingsToken} from '@angular/fire/firestore';
 import {AngularFireAuthModule} from '@angular/fire/auth';
-
-
-
-
 import {environment} from '../environments/environment';
 
 
@@ -46,11 +52,18 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    StoreModule.forRoot(appReducers),
+    StoreDevtoolsModule.instrument(
+      {
+        maxAge: 25,
+        logOnly: environment.production
+      }
+    ),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule
   ],
-  providers: [],
+  providers: [{ provide: FirestoreSettingsToken, useValue: {}}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
