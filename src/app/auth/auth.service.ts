@@ -18,6 +18,7 @@ import {Subscription} from 'rxjs';
 export class AuthService {
 
   userSubscription: Subscription = new Subscription();
+  private usuario: User;
 
   constructor(private afAuth: AngularFireAuth,
               private router: Router,
@@ -32,11 +33,15 @@ export class AuthService {
           this.userSubscription = this.afDB.doc(`${ userFb.uid }/usuario`).valueChanges()
             .subscribe(
               (usuarioObj: any) => {
+
                 const newUser = new User(usuarioObj);
                 this.store.dispatch(new SetUserAction(newUser));
+                this.usuario = newUser;
+
               }
             );
         } else {
+          this.usuario = null;
           this.userSubscription.unsubscribe();
         }
       });
@@ -105,5 +110,9 @@ export class AuthService {
           return fbUser  != null;
         })
       );
+  }
+
+  public getUsuario() {
+    return { ...this.usuario };
   }
 }

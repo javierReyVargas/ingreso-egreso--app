@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {IngresoEgreso} from './ingreso-egreso.model';
+import {IngresoEgresoService} from './ingreso-egreso.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-ingreso-egreso',
@@ -12,7 +14,7 @@ export class IngresoEgresoComponent implements OnInit {
   forma: FormGroup;
   tipo = 'ingreso';
 
-  constructor() { }
+  constructor(private ingresoEgresoService: IngresoEgresoService) { }
 
   ngOnInit() {
     this.forma = new FormGroup({
@@ -24,7 +26,21 @@ export class IngresoEgresoComponent implements OnInit {
   public crearIngresoEgreso() {
 
     const ingresoEgreso = new IngresoEgreso({...this.forma.value, tipo: this.tipo});
-    console.log(ingresoEgreso);
+
+    this.ingresoEgresoService.crearIngresoEgreso( ingresoEgreso )
+      .then(
+        () => {
+          Swal('Creado', ingresoEgreso.descripcion, 'success');
+          this.forma.reset({ monto: 0 });
+        }
+      )
+      .catch(
+        ( error ) => {
+          Swal('Error en el registro', error.message, 'error');
+        }
+      );
+
+
   }
 
 }
