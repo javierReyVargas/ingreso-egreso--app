@@ -15,7 +15,7 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 * modules
 * */
 import {AppRoutingModule} from './app.routing.module';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFirestoreModule, FirestoreSettingsToken} from '@angular/fire/firestore';
 import {AngularFireAuthModule} from '@angular/fire/auth';
@@ -51,6 +51,7 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     FormsModule,
     StoreModule.forRoot(appReducers),
     StoreDevtoolsModule.instrument(
