@@ -5,7 +5,7 @@ import {AuthService} from '../auth/auth.service';
 import {Store} from '@ngrx/store';
 import {AppState} from '../app.reducer';
 import {filter, map} from 'rxjs/operators';
-import {SetItemsAction} from './ingreso-egreso.actions';
+import {SetItemsAction, UnsetItemsAction} from './ingreso-egreso.actions';
 import {Subscription} from 'rxjs';
 
 @Injectable({
@@ -70,5 +70,12 @@ export class IngresoEgresoService {
     return this.aFDB.doc( `${ user.uid }/ingresos-egresos/items/${ uid }`)
       .delete();
 
+  }
+
+  public cancelarSubscriptions() {
+    this.ingresoEgresoItemsSubscription.unsubscribe();
+    this.ingresoEgresoListenerSubscription.unsubscribe();
+
+    this.store.dispatch(new UnsetItemsAction());
   }
 }

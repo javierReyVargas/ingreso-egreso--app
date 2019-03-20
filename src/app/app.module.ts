@@ -9,7 +9,10 @@ import {appReducers} from './app.reducer';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 
 
-
+/*
+* chart js
+* */
+import { ChartsModule } from "ng2-charts";
 
 /*
 * modules
@@ -54,6 +57,7 @@ import { OrdenIngresoEgresoPipe } from './ingreso-egreso/pipe/orden-ingreso-egre
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    ChartsModule,
     FormsModule,
     StoreModule.forRoot(appReducers),
     StoreDevtoolsModule.instrument(
