@@ -60,11 +60,15 @@ export class IngresoEgresoService {
       .subscribe( (coleccion: any[]) => {
         this.store.dispatch(new SetItemsAction(coleccion));
       });
-
   }
 
-  private cancelSubscriptions() {
-    this.ingresoEgresoItemsSubscription.unsubscribe();
-    this.ingresoEgresoListenerSubscription.unsubscribe();
+
+  public deleteEntryEgress( uid: string){
+
+    const  user = this.authService.getUsuario();
+
+    return this.aFDB.doc( `${ user.uid }/ingresos-egresos/items/${ uid }`)
+      .delete();
+
   }
 }
